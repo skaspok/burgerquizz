@@ -55,4 +55,11 @@ class MessageController(private val teamManager:TeamManager) {
     }
 
 
+    @MessageMapping("/points")
+    fun updatePoints(points: PointsTransfertObject){
+        teamManager.updatePoints(points)
+
+    }
+
+
 }

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Burger Quizz Player</title>
+    <title>Burger Quizz Master</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/style.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
@@ -13,30 +13,43 @@
 </head>
 
 <body>
-<noscript>
-    <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-        enabled. Please enable
-        Javascript and reload this page!</h2>
-</noscript>
-<div id="main-content" class="container">
+    <noscript>
+        <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+            enabled. Please enable
+            Javascript and reload this page!</h2>
+    </noscript>
 
-    <div class="row">
-        <div id="buttonTest" class="col-md-6">
-            Lancer video de test
-        </div>
-        <div id="ketchup-connected" class="col-md-6">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-10">
-         
-        <div class="col-md-1">
-        </div>
-    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <button id="minus-mayo" type="button" class="btn">Moins</button>
+            </div>
+            <div class="col-xs-3 mayo" >
+                Mayo
+            </div>
 
-</div>
+            <div class="col-xs-3">
+                <button id="plus-mayo" type="button" class="btn">Plus</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <button id="minus-ketchup" type="button" class="btn">Moins</button>
+            </div>
+            <div class="col-xs-3  ketchup">
+                Ketchup
+            </div>
+            <div class="col-xs-3">
+                <button id="plus-ketchup" type="button" class="btn">Plus</button>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
+    </div> <!-- end of container -->
 </body>
 
 </html>

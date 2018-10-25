@@ -12,20 +12,27 @@ import javax.imageio.ImageIO
 import javax.swing.*
 import java.awt.Dimension
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent
+import javax.swing.text.StyleConstants.setIcon
+import javax.swing.JLabel
+import javax.swing.ImageIcon
+import java.awt.Font.PLAIN
+import javax.swing.border.EmptyBorder
+import javax.swing.text.StyleConstants.Alignment
 
 
 class UiClass(title: String) : JFrame() {
 
     companion object {
-        var instance : UiClass? =null;
+        var instance: UiClass? = null;
 
     }
 
-    private val ketchupLabel = JLabel()
-    private val mayoTeamLabel  = JLabel()
+    private val ketchupTeamLabel = JLabel()
+    private val mayoTeamLabel = JLabel()
     private val mayoBuzzLabel = JLabel()
     private val ketchupBuzzLabel = JLabel()
-
+    private val mayoScoreLabel = JLabel()
+    private val ketchupScoreLabel = JLabel()
 
     //Videos
     private val videoFrame = JFrame()
@@ -34,7 +41,7 @@ class UiClass(title: String) : JFrame() {
     private val logger = LoggerFactory.getLogger(UiClass::class.qualifiedName)
 
     init {
-        if(instance == null){
+        if (instance == null) {
             createUI(title)
             instance = this
         }
@@ -48,40 +55,34 @@ class UiClass(title: String) : JFrame() {
 
         val scorePanel = JPanel()
 
-        this.layout = GridLayout(3,1)
+        this.layout = GridLayout(3, 1)
 
-        scorePanel.setBorder( BorderFactory.createLineBorder( Color.GREEN, 3));
-
-        val mayoLabel = Label()
-        mayoLabel.text ="test"
+        scorePanel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 
         this.add(initTeamPanel())
         this.add(initBuzzPanel())
+        this.add(initScorePanel())
 
         initVeoFrame()
 
         this.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         this.isVisible = true
 
-        val path = "/home/adrien/Downloads/videoplayback.mp4";
-
-        //playVideo("/home/adrien/Downloads/videoplayback.mp4");
     }
-
 
 
     /**
      * Display active or inactive team image depending on the team connection status
      */
-    fun setTeamImage(team: TeamName, active: Boolean){
+    fun setTeamImage(team: TeamName, active: Boolean) {
 
-        logger.info("setTeamImage "+ team.toString() + " "+active)
+        logger.info("setTeamImage " + team.toString() + " " + active)
 
-        val activStr = if (active)  "" else "-inactive"
-        if(team == TeamName.MAYO){
-            mayoTeamLabel.icon = getScaledBufferedImage("/static/images/mayo" +activStr+".jpeg")
-        }else if(team == TeamName.KETCHUP){
-            ketchupLabel.icon = getScaledBufferedImage("/static/images/ketchup"+activStr+".jpeg")
+        val activStr = if (active) "" else "-inactive"
+        if (team == TeamName.MAYO) {
+            mayoTeamLabel.icon = getScaledBufferedImage("/static/images/mayo" + activStr + ".jpeg")
+        } else if (team == TeamName.KETCHUP) {
+            ketchupTeamLabel.icon = getScaledBufferedImage("/static/images/ketchup" + activStr + ".jpeg")
         }
         revalidate()
         repaint()
@@ -90,16 +91,26 @@ class UiClass(title: String) : JFrame() {
     /**
      * If null : reset the buzzer display
      */
-    fun buzz(team: TeamName){
-        if(team == TeamName.MAYO){
+    fun buzz(team: TeamName) {
+        if (team == TeamName.MAYO) {
             mayoBuzzLabel.setOpaque(true);
             mayoBuzzLabel.background = Color.YELLOW
-        }else if(team == TeamName.KETCHUP){
+        } else if (team == TeamName.KETCHUP) {
             ketchupBuzzLabel.setOpaque(true);
             ketchupBuzzLabel.background = Color.RED
-        }else{
-            mayoTeamLabel.setOpaque( false)
+        } else {
+            mayoTeamLabel.setOpaque(false)
             ketchupBuzzLabel.isOpaque = false
+        }
+        revalidate()
+        repaint()
+    }
+
+    fun setScore(teamName: TeamName, value: Int){
+        if(teamName == TeamName.MAYO){
+            mayoScoreLabel.text = value.toString()
+        }else if(teamName == TeamName.KETCHUP){
+            ketchupScoreLabel.text = value.toString()
         }
         revalidate()
         repaint()
@@ -108,7 +119,7 @@ class UiClass(title: String) : JFrame() {
     /**
      * Play the video
      */
-    fun playVideo(path: String){
+    fun playVideo(path: String) {
 
         videoFrame.isVisible = true
         videoFrame.isAlwaysOnTop = true
@@ -126,65 +137,83 @@ class UiClass(title: String) : JFrame() {
         videoFrame.isUndecorated = true
     }
 
-    private fun initBuzzPanel(): JPanel{
+    private fun initBuzzPanel(): JPanel {
         val buzzPanel = JPanel()
         buzzPanel.layout = FlowLayout()
-
-//        mayoBuzzLabel.setSize(maximumSize)
+        buzzPanel.background = Color.black
 
         val dim = Dimension(300, 150)
         mayoBuzzLabel.preferredSize = dim
-//        mayoBuzzLabel.setBorder( BorderFactory.createLineBorder( Color.black, 4));
         ketchupBuzzLabel.preferredSize = dim
-        buzzPanel.setSize(this.width,50)
+        buzzPanel.setSize(this.width, 50)
         buzzPanel.add(mayoBuzzLabel)
         buzzPanel.add(ketchupBuzzLabel)
 
-        buzzPanel.setBorder( BorderFactory.createLineBorder( Color.ORANGE, 4));
+//        buzzPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
 
         return buzzPanel
     }
 
-    private fun initTeamPanel(): JPanel{
+    private fun initTeamPanel(): JPanel {
         val teamPanel = JPanel()
         teamPanel.layout = FlowLayout()
+        teamPanel.background = Color.black
         teamPanel.size = Dimension(this.width, (this.height * 0.3).toInt())
 
-        setTeamImage(TeamName.MAYO,false)
+        setTeamImage(TeamName.MAYO, false)
         teamPanel.add(mayoTeamLabel)
 
-        setTeamImage(TeamName.KETCHUP,false)
-        teamPanel.add(ketchupLabel)
+        setTeamImage(TeamName.KETCHUP, false)
+        teamPanel.add(ketchupTeamLabel)
 
-        teamPanel.border = BorderFactory.createLineBorder( Color.PINK, 3);
+//        teamPanel.border = BorderFactory.createLineBorder(Color.PINK, 3);
         return teamPanel
     }
 
+    private fun initScorePanel(): JPanel {
+        val scorePanel = JPanel()
+        scorePanel.layout = FlowLayout()
+        scorePanel.background = Color.black
 
-    private fun getScaledBufferedImage(path: String): ImageIcon{
-        val file = ClassPathResource(path).file
+        setBackground(mayoScoreLabel, "/static/images/backgroundScore.png")
+        initScoreLabel(mayoScoreLabel)
+
+        val miams1 = JLabel()
+        setBackground(miams1, "/static/images/miams.png");
+        setBackground(ketchupScoreLabel, "/static/images/backgroundScore.png")
+        initScoreLabel(ketchupScoreLabel)
+        val miams2 = JLabel()
+        setBackground(miams2, "/static/images/miams.png");
+        scorePanel.add(mayoScoreLabel)
+        scorePanel.add(miams1)
+        scorePanel.add(ketchupScoreLabel)
+        scorePanel.add(miams2)
+        return scorePanel
+    }
+
+    private fun setBackground(label: JLabel, imagePath: String) {
+        val file = ClassPathResource(imagePath).file
         val image = ImageIO.read(file)
-        val ratio = 0.3//mayo.height/(this.height * 0.3 )
-        val scaledImage = image.getScaledInstance((image.width*ratio).toInt(), (image.height*ratio).toInt(), Image.SCALE_DEFAULT )
-        return ImageIcon( scaledImage )
+        label.icon = ImageIcon(image)
+    }
+
+    private fun initScoreLabel(label: JLabel){
+        label.font = Font("Serif", Font.PLAIN, 80)
+        label.text = "0"
+        label.alignmentX = Component.LEFT_ALIGNMENT
+        label.foreground = Color.white
+//        label.border =  BorderFactory.createLineBorder(Color.PINK, 3);
+//        label.border = EmptyBorder(0, 0, 0, -20)
     }
 
 
-
-
-
-//    fun Image.toBufferedImage(): BufferedImage {
-//        if (this is BufferedImage) {
-//            return this
-//        }
-//        val bufferedImage = BufferedImage(this.getWidth(null), this.getHeight(null), BufferedImage.TYPE_INT_ARGB)
-//
-//        val graphics2D = bufferedImage.createGraphics()
-//        graphics2D.drawImage(this, 0, 0, null)
-//        graphics2D.dispose()
-//
-//        return bufferedImage
-//    }
+    private fun getScaledBufferedImage(path: String): ImageIcon {
+        val file = ClassPathResource(path).file
+        val image = ImageIO.read(file)
+        val ratio = 0.3//mayo.height/(this.height * 0.3 )
+        val scaledImage = image.getScaledInstance((image.width * ratio).toInt(), (image.height * ratio).toInt(), Image.SCALE_DEFAULT)
+        return ImageIcon(scaledImage)
+    }
 }
 
 

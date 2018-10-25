@@ -44,6 +44,16 @@ class TeamManager(){
         return null
     }
 
+    fun updatePoints(points: PointsTransfertObject){
+        for(team in theTeams){
+            if(team.teamName.teamName == points.team)  {
+                team.score += points.points
+                UiClass.instance!!.setScore(team.teamName, team.score)
+                break
+            }
+        }
+    }
+
     fun removeTeam(token: String){
         throw NotImplementedException()
     }
