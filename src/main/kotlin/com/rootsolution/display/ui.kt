@@ -1,30 +1,25 @@
 package com.rootsolution.display
 
+import com.rootsolution.GlobalProperties
 import com.rootsolution.TeamName
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.ClassPathResource
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent
 import uk.co.caprica.vlcj.player.MediaPlayer
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter
-import uk.co.caprica.vlcj.player.MediaPlayerFactory
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer
 import java.awt.*
+import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.*
-import java.awt.Dimension
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent
-import javax.swing.text.StyleConstants.setIcon
-import javax.swing.JLabel
-import javax.swing.ImageIcon
-import java.awt.Font.PLAIN
-import javax.swing.border.EmptyBorder
-import javax.swing.text.StyleConstants.Alignment
 
 
-class UiClass(title: String) : JFrame() {
+class UiClass : JFrame() {
+
+
 
     companion object {
         var instance: UiClass? = null;
-
     }
 
     private val ketchupTeamLabel = JLabel()
@@ -42,12 +37,12 @@ class UiClass(title: String) : JFrame() {
 
     init {
         if (instance == null) {
-            createUI(title)
+            createUI()
             instance = this
         }
     }
 
-    private fun createUI(title: String) {
+    private fun createUI() {
 
         isUndecorated = true
         size = maximumSize
@@ -106,10 +101,10 @@ class UiClass(title: String) : JFrame() {
         repaint()
     }
 
-    fun setScore(teamName: TeamName, value: Int){
-        if(teamName == TeamName.MAYO){
+    fun setScore(teamName: TeamName, value: Int) {
+        if (teamName == TeamName.MAYO) {
             mayoScoreLabel.text = value.toString()
-        }else if(teamName == TeamName.KETCHUP){
+        } else if (teamName == TeamName.KETCHUP) {
             ketchupScoreLabel.text = value.toString()
         }
         revalidate()
@@ -121,12 +116,17 @@ class UiClass(title: String) : JFrame() {
      */
     fun playVideo(path: String) {
 
-        videoFrame.isVisible = true
-        videoFrame.isAlwaysOnTop = true
-        videoFrame.toFront()
-        mediaPlayerComponent.mediaPlayer.playMedia(path)
+        val file = File(path)
+        if (file.isFile) {
+            videoFrame.isVisible = true
+            videoFrame.isAlwaysOnTop = true
+            videoFrame.toFront()
+            mediaPlayerComponent.mediaPlayer.playMedia(path)
+        }
+        else {
+            logger.error("Error with : " + path)
+        }
     }
-
 
     private fun initVeoFrame() {
         //Video init
@@ -197,7 +197,7 @@ class UiClass(title: String) : JFrame() {
         label.icon = ImageIcon(image)
     }
 
-    private fun initScoreLabel(label: JLabel){
+    private fun initScoreLabel(label: JLabel) {
         label.font = Font("Serif", Font.PLAIN, 80)
         label.text = "0"
         label.alignmentX = Component.LEFT_ALIGNMENT
@@ -217,10 +217,9 @@ class UiClass(title: String) : JFrame() {
 }
 
 
-
 private fun createAndShowGUI() {
 
-    val frame = UiClass("Burger quizz")
+    val frame = UiClass()
 }
 
 fun display() {
@@ -231,6 +230,6 @@ internal class BgMediaPlayerEventAdapter(private val jframe: JFrame) : MediaPlay
 
     @Override
     override fun finished(mediaPlayer: MediaPlayer) {
-        jframe.isVisible =false
+        jframe.isVisible = false
     }
 }
