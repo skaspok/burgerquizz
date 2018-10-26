@@ -1,5 +1,6 @@
 package com.rootsolution.webSocket
 
+import com.rootsolution.BuzzerManager
 import com.rootsolution.GlobalProperties
 import com.rootsolution.Team
 import com.rootsolution.VideoManager
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Controller
 
 @Controller
 class MessageController(private val teamManager:TeamManager,
-                        private val videoManager: VideoManager) {
+                        private val videoManager: VideoManager,
+                        private val buzzerManager: BuzzerManager) {
 
     @Autowired
     lateinit var globalProperties: GlobalProperties
@@ -27,13 +29,11 @@ class MessageController(private val teamManager:TeamManager,
 
     @MessageMapping("/buzz/{destToken}")
     @SendTo("/bg/buzz-result/{destToken}")
-    fun buzz(@DestinationVariable destToken: String): String{
+    fun buzz(@DestinationVariable destToken: String): Boolean{
         logger.info("Buzz " + destToken)
 
-        val team = teamManager.getTeam(destToken)
-        UiClass.instance!!.buzz(team!!.teamName)
-
-        return "OK"
+        //SendTo not use yet
+        return buzzerManager.handleNewBuzz(destToken)
     }
 
 

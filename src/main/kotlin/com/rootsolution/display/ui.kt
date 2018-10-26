@@ -1,9 +1,7 @@
 package com.rootsolution.display
 
-import com.rootsolution.GlobalProperties
 import com.rootsolution.TeamName
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.ClassPathResource
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent
 import uk.co.caprica.vlcj.player.MediaPlayer
@@ -86,15 +84,15 @@ class UiClass : JFrame() {
     /**
      * If null : reset the buzzer display
      */
-    fun buzz(team: TeamName) {
+    fun buzz(team: TeamName?) {
         if (team == TeamName.MAYO) {
-            mayoBuzzLabel.setOpaque(true);
+            mayoBuzzLabel.isOpaque = true;
             mayoBuzzLabel.background = Color.YELLOW
         } else if (team == TeamName.KETCHUP) {
-            ketchupBuzzLabel.setOpaque(true);
+            ketchupBuzzLabel.isOpaque = true;
             ketchupBuzzLabel.background = Color.RED
         } else {
-            mayoTeamLabel.setOpaque(false)
+            mayoBuzzLabel.isOpaque = false
             ketchupBuzzLabel.isOpaque = false
         }
         revalidate()
