@@ -1,6 +1,6 @@
 package com.rootsolution;
 
-import com.rootsolution.display.UiKt;
+import com.rootsolution.burgerquizz.display.UiKt;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;

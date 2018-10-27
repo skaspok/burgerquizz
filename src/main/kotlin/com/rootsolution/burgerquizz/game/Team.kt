@@ -1,4 +1,4 @@
-package com.rootsolution
+package com.rootsolution.burgerquizz.game
 
 class Team(val teamName: TeamName,
            val id: String,

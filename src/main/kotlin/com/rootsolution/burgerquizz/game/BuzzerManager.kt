@@ -1,7 +1,6 @@
-package com.rootsolution
+package com.rootsolution.burgerquizz.game
 
-import com.rootsolution.display.UiClass
-import com.rootsolution.webSocket.TeamManager
+import com.rootsolution.burgerquizz.display.UiClass
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 

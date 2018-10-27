@@ -1,6 +1,6 @@
-package com.rootsolution.display
+package com.rootsolution.burgerquizz.display
 
-import com.rootsolution.TeamName
+import com.rootsolution.burgerquizz.game.TeamName
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.ClassPathResource

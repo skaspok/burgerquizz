@@ -1,12 +1,8 @@
-package com.rootsolution.config
+package com.rootsolution.burgerquizz.config
 
-import com.rootsolution.webSocket.event.PresenceEventListener
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.context.properties.EnableConfigurationProperties
+import com.rootsolution.burgerquizz.webSocket.event.PresenceEventListener
 import org.springframework.context.annotation.*
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import java.io.IOException
 
 @Configuration
 class ChatConfig {

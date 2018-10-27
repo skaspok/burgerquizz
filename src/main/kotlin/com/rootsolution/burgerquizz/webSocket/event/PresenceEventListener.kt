@@ -1,16 +1,12 @@
-package com.rootsolution.webSocket.event
+package com.rootsolution.burgerquizz.webSocket.event
 
-import com.rootsolution.Team
-import com.rootsolution.webSocket.TeamManager
+import com.rootsolution.burgerquizz.game.TeamManager
 import org.apache.commons.lang3.StringUtils.isBlank
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.event.EventListener
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor
-import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.web.socket.messaging.SessionConnectEvent
 import org.springframework.web.socket.messaging.SessionDisconnectEvent
-import java.util.*
 
 /**
  * Listener to track user presence.
@@ -19,9 +15,9 @@ import java.util.*
  *
  * @author Sergi Almar
  */
-class PresenceEventListener( ) {
-    @Autowired
-    private val teamManager: TeamManager? =null
+class PresenceEventListener {
+//    @Autowired
+//    private val teamManager: TeamManager? =null
 
     private val logger = LoggerFactory.getLogger(PresenceEventListener::class.qualifiedName)
 

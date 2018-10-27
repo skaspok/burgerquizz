@@ -1,9 +1,7 @@
-package com.rootsolution
+package com.rootsolution.burgerquizz.display
 
-import com.rootsolution.webSocket.MessageController
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
-import org.springframework.boot.context.properties.bind.Bindable.listOf
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Service
 import java.io.File
@@ -13,7 +11,7 @@ import java.util.stream.Collectors
 
 
 @Service
-class VideoManager() {
+class VideoManager {
 
     private val logger = LoggerFactory.getLogger(VideoManager::class.qualifiedName)
 

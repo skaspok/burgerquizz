@@ -1,13 +1,10 @@
-package com.rootsolution.webSocket
+package com.rootsolution.burgerquizz.webSocket
 
-import com.rootsolution.BuzzerManager
-import com.rootsolution.GlobalProperties
-import com.rootsolution.Team
-import com.rootsolution.VideoManager
-import com.rootsolution.display.UiClass
+import com.rootsolution.burgerquizz.game.BuzzerManager
+import com.rootsolution.burgerquizz.game.Team
+import com.rootsolution.burgerquizz.game.TeamManager
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.handler.annotation.DestinationVariable
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
@@ -15,10 +12,10 @@ import org.springframework.stereotype.Controller
 
 
 @Controller
-class MessageController( private val teamManager:TeamManager,
-                        private val buzzerManager: BuzzerManager) {
+class PlayerWsController(private val teamManager: TeamManager,
+                         private val buzzerManager: BuzzerManager) {
 
-    private val logger = LoggerFactory.getLogger(MessageController::class.qualifiedName)
+    private val logger = LoggerFactory.getLogger(PlayerWsController::class.qualifiedName)
 
     //Players
     //TODO : different file?

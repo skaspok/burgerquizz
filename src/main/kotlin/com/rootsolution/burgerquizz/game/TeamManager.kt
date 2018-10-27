@@ -1,8 +1,7 @@
-package com.rootsolution.webSocket
+package com.rootsolution.burgerquizz.game
 
-import com.rootsolution.Team
-import com.rootsolution.TeamName
-import com.rootsolution.display.UiClass
+import com.rootsolution.burgerquizz.display.UiClass
+import com.rootsolution.burgerquizz.webSocket.DTO.PointsTransfertObject
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import sun.reflect.generics.reflectiveObjects.NotImplementedException
@@ -14,17 +13,17 @@ class TeamManager(){
     val theTeams: ArrayList<Team> = ArrayList()
     private val logger = LoggerFactory.getLogger(TeamManager::class.qualifiedName)
 
-    fun newTeam(token: String): Team{
+    fun newTeam(token: String): Team {
         var team: Team
         when {
             theTeams.size ==0 -> {
                 logger.info("Mayo : "+token)
-                team = Team(TeamName.MAYO,token,0)
+                team = Team(TeamName.MAYO, token, 0)
 
             }
             theTeams.size == 1 -> {
                 logger.info("Ketchup : "+token)
-                team =Team(TeamName.KETCHUP,token,0)
+                team = Team(TeamName.KETCHUP, token, 0)
 
             }
             else -> throw Exception("Teams already registered")
