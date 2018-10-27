@@ -1,6 +1,7 @@
 package com.rootsolution.display
 
 import com.rootsolution.TeamName
+import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.ClassPathResource
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent
@@ -11,10 +12,7 @@ import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.*
 
-
 class UiClass : JFrame() {
-
-
 
     companion object {
         var instance: UiClass? = null;
@@ -44,6 +42,7 @@ class UiClass : JFrame() {
 
         isUndecorated = true
         size = maximumSize
+        title = "Burger Quizz"
         setLocationRelativeTo(null)
 
         val scorePanel = JPanel()
@@ -85,11 +84,14 @@ class UiClass : JFrame() {
      * If null : reset the buzzer display
      */
     fun buzz(team: TeamName?) {
+
         if (team == TeamName.MAYO) {
-            mayoBuzzLabel.isOpaque = true;
+            playBuzzSound("/static/sounds/mayo-sound.mp3")
+            mayoBuzzLabel.isOpaque = true
             mayoBuzzLabel.background = Color.YELLOW
         } else if (team == TeamName.KETCHUP) {
-            ketchupBuzzLabel.isOpaque = true;
+            playBuzzSound("/static/sounds/ketchup-sound.mp3")
+            ketchupBuzzLabel.isOpaque = true
             ketchupBuzzLabel.background = Color.RED
         } else {
             mayoBuzzLabel.isOpaque = false
@@ -97,6 +99,11 @@ class UiClass : JFrame() {
         }
         revalidate()
         repaint()
+    }
+
+    private fun playBuzzSound(file: String) {
+        val file = ClassPathResource(file).file
+        playVideo(file.path)
     }
 
     fun setScore(teamName: TeamName, value: Int) {
@@ -116,10 +123,16 @@ class UiClass : JFrame() {
 
         val file = File(path)
         if (file.isFile) {
-            videoFrame.isVisible = true
-            videoFrame.isAlwaysOnTop = true
-            videoFrame.toFront()
-            mediaPlayerComponent.mediaPlayer.playMedia(path)
+            if( StringUtils.endsWith(file.name, ".mp3" ) || StringUtils.endsWith(file.name, ".MP3" )){
+                videoFrame.isVisible = true
+                videoFrame.toBack()
+                mediaPlayerComponent.mediaPlayer.playMedia(path)
+            }else {
+                videoFrame.isVisible = true
+                videoFrame.isAlwaysOnTop = true
+                videoFrame.toFront()
+                mediaPlayerComponent.mediaPlayer.playMedia(path)
+            }
         }
         else {
             logger.error("Error with : " + path)
@@ -217,7 +230,7 @@ class UiClass : JFrame() {
 
 private fun createAndShowGUI() {
 
-    val frame = UiClass()
+    UiClass()
 }
 
 fun display() {

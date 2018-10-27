@@ -15,12 +15,8 @@ import org.springframework.stereotype.Controller
 
 
 @Controller
-class MessageController(private val teamManager:TeamManager,
-                        private val videoManager: VideoManager,
+class MessageController( private val teamManager:TeamManager,
                         private val buzzerManager: BuzzerManager) {
-
-    @Autowired
-    lateinit var globalProperties: GlobalProperties
 
     private val logger = LoggerFactory.getLogger(MessageController::class.qualifiedName)
 
@@ -52,23 +48,6 @@ class MessageController(private val teamManager:TeamManager,
     }
 
 
-    //Master
-    @MessageMapping("/start-video")
-    fun startVideo(file: String){
-        logger.info("start Video")
-        UiClass.instance!!.playVideo(globalProperties.videoPath + file)
-    }
-
-    @MessageMapping("/points")
-    fun updatePoints(points: PointsTransfertObject){
-        teamManager.updatePoints(points)
-    }
-
-    @MessageMapping("/get-videos")
-    @SendTo("/bg/videos")
-    fun getVideos(): String{
-        return videoManager.getVideoList()
-    }
 
 
 }
