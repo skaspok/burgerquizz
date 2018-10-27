@@ -18,18 +18,16 @@ class VideoManager {
     fun getVideoList(): String {
 
         logger.info("get and return available video")
-
-        val resource = ClassPathResource("/static/videos")
-        val file = resource.getFile()
+        val videoFoldFile = File(UiClass.VIDEO_PATH)
 
         val listJsonElt = ArrayList<String>()
 
         val sb = StringBuilder()
         sb.append("{ ")
-        listJsonElt.add("\"/\" : "+ listFilesForFoler(file))
+        listJsonElt.add("\"/\" : "+ listFilesForFoler(videoFoldFile))
 
         //Only one level
-        for( folder in file.listFiles()){
+        for( folder in videoFoldFile.listFiles()){
             if(folder.isDirectory){
                 listJsonElt.add( "\"" +folder.name+"\"" +" : "+ listFilesForFoler(folder) )
             }

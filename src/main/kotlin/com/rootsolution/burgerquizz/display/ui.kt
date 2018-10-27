@@ -15,7 +15,8 @@ import javax.swing.*
 class UiClass : JFrame() {
 
     companion object {
-        var instance: UiClass? = null;
+        var instance: UiClass? = null
+        var VIDEO_PATH: String = ""
     }
 
     private val ketchupTeamLabel = JLabel()
@@ -86,11 +87,11 @@ class UiClass : JFrame() {
     fun buzz(team: TeamName?) {
 
         if (team == TeamName.MAYO) {
-            playBuzzSound("/static/sounds/mayo-sound.mp3")
+            playVideo("/sounds/mayo-sound.mp3")
             mayoBuzzLabel.isOpaque = true
             mayoBuzzLabel.background = Color.YELLOW
         } else if (team == TeamName.KETCHUP) {
-            playBuzzSound("/static/sounds/ketchup-sound.mp3")
+            playVideo("/sounds/ketchup-sound.mp3")
             ketchupBuzzLabel.isOpaque = true
             ketchupBuzzLabel.background = Color.RED
         } else {
@@ -99,11 +100,6 @@ class UiClass : JFrame() {
         }
         revalidate()
         repaint()
-    }
-
-    private fun playBuzzSound(file: String) {
-        val file = ClassPathResource(file).file
-        playVideo(file.path)
     }
 
     fun setScore(teamName: TeamName, value: Int) {
@@ -121,21 +117,20 @@ class UiClass : JFrame() {
      */
     fun playVideo(path: String) {
 
-        val file = File(path)
+        val file = File("$VIDEO_PATH/$path")
         if (file.isFile) {
-            if( StringUtils.endsWith(file.name, ".mp3" ) || StringUtils.endsWith(file.name, ".MP3" )){
+            if (StringUtils.endsWith(file.name, ".mp3") || StringUtils.endsWith(file.name, ".MP3")) {
                 videoFrame.isVisible = true
                 videoFrame.toBack()
-                mediaPlayerComponent.mediaPlayer.playMedia(path)
-            }else {
+                mediaPlayerComponent.mediaPlayer.playMedia(file.path)
+            } else {
                 videoFrame.isVisible = true
                 videoFrame.isAlwaysOnTop = true
                 videoFrame.toFront()
-                mediaPlayerComponent.mediaPlayer.playMedia(path)
+                mediaPlayerComponent.mediaPlayer.playMedia(file.path)
             }
-        }
-        else {
-            logger.error("Error with : " + path)
+        } else {
+            logger.error("Error with : " + file.path)
         }
     }
 
@@ -233,7 +228,9 @@ private fun createAndShowGUI() {
     UiClass()
 }
 
-fun display() {
+fun display(videoPath: String) {
+
+    UiClass.VIDEO_PATH = videoPath
     EventQueue.invokeLater(::createAndShowGUI)
 }
 

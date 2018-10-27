@@ -21,14 +21,14 @@ class MasterWsController(private val teamManager: TeamManager,
         private var masterConnected :Boolean = false
     }
 
-    @Autowired
-    lateinit var globalProperties: GlobalProperties
+//    @Autowired
+//    lateinit var globalProperties: GlobalProperties
 
     //Master
     @MessageMapping("/start-video")
     fun startVideo(file: String){
         logger.info("start Video")
-        UiClass.instance!!.playVideo(globalProperties.videoPath + file)
+        UiClass.instance!!.playVideo( file)
     }
 
     @MessageMapping("/points")
