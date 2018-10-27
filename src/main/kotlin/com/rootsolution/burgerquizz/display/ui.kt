@@ -11,6 +11,9 @@ import java.awt.*
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.*
+import javax.swing.JFrame
+
+
 
 class UiClass : JFrame() {
 
@@ -42,25 +45,22 @@ class UiClass : JFrame() {
     private fun createUI() {
 
         isUndecorated = true
-        size = maximumSize
+        this.size = maximumSize
+
         title = "Burger Quizz"
         setLocationRelativeTo(null)
 
-        val scorePanel = JPanel()
-
         this.layout = GridLayout(3, 1)
-
-        scorePanel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
 
         this.add(initTeamPanel())
         this.add(initBuzzPanel())
         this.add(initScorePanel())
 
-        initVeoFrame()
+        initVideoFrame()
 
+        this.extendedState = this.getExtendedState() or JFrame.MAXIMIZED_BOTH
         this.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         this.isVisible = true
-
     }
 
 
@@ -134,7 +134,7 @@ class UiClass : JFrame() {
         }
     }
 
-    private fun initVeoFrame() {
+    private fun initVideoFrame() {
         //Video init
         videoFrame.contentPane = mediaPlayerComponent;
         videoFrame.size = maximumSize
@@ -198,7 +198,7 @@ class UiClass : JFrame() {
     }
 
     private fun setBackground(label: JLabel, imagePath: String) {
-        val file = ClassPathResource(imagePath).file
+        val file = ClassPathResource(imagePath).inputStream
         val image = ImageIO.read(file)
         label.icon = ImageIcon(image)
     }
@@ -214,7 +214,7 @@ class UiClass : JFrame() {
 
 
     private fun getScaledBufferedImage(path: String): ImageIcon {
-        val file = ClassPathResource(path).file
+        val file = ClassPathResource(path).inputStream
         val image = ImageIO.read(file)
         val ratio = 0.3//mayo.height/(this.height * 0.3 )
         val scaledImage = image.getScaledInstance((image.width * ratio).toInt(), (image.height * ratio).toInt(), Image.SCALE_DEFAULT)
