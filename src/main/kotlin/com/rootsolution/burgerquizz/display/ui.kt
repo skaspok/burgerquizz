@@ -1,5 +1,6 @@
 package com.rootsolution.burgerquizz.display
 
+import com.rootsolution.burgerquizz.config.OsInfoService
 import com.rootsolution.burgerquizz.game.TeamName
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
@@ -10,9 +11,10 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter
 import java.awt.*
 import java.io.File
 import javax.imageio.ImageIO
-import javax.swing.*
+import javax.swing.ImageIcon
 import javax.swing.JFrame
-
+import javax.swing.JLabel
+import javax.swing.JPanel
 
 
 class UiClass : JFrame() {
@@ -58,7 +60,7 @@ class UiClass : JFrame() {
 
         initVideoFrame()
 
-        this.extendedState = this.getExtendedState() or JFrame.MAXIMIZED_BOTH
+        this.extendedState = this.extendedState or JFrame.MAXIMIZED_BOTH
         this.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         this.isVisible = true
     }
@@ -117,20 +119,32 @@ class UiClass : JFrame() {
      */
     fun playVideo(path: String) {
 
-        val file = File("$VIDEO_PATH/$path")
-        if (file.isFile) {
-            if (StringUtils.endsWith(file.name, ".mp3") || StringUtils.endsWith(file.name, ".MP3")) {
-                videoFrame.isVisible = true
-                videoFrame.toBack()
-                mediaPlayerComponent.mediaPlayer.playMedia(file.path)
-            } else {
-                videoFrame.isVisible = true
-                videoFrame.isAlwaysOnTop = true
-                videoFrame.toFront()
-                mediaPlayerComponent.mediaPlayer.playMedia(file.path)
-            }
+        //Raspberrypi?
+        if (OsInfoService.isOmxPlayerAvailable) {
+
+            //omxplayer works better bur files must be without any spaces
+            val arg: String = "$VIDEO_PATH/$path" //.replace(" ","\\ ")
+            Runtime.getRuntime().exec("omxplayer " + arg)
+
         } else {
-            logger.error("Error with : " + file.path)
+
+            val file = File("$VIDEO_PATH/$path")
+            if (file.isFile) {
+                if (StringUtils.endsWith(file.name, ".mp3") || StringUtils.endsWith(file.name, ".MP3")) {
+                    videoFrame.isVisible = true
+                    videoFrame.toBack()
+                    mediaPlayerComponent.mediaPlayer.playMedia(file.path)
+                } else {
+                    videoFrame.isVisible = true
+                    videoFrame.isAlwaysOnTop = true
+                    this.toBack()
+                    videoFrame.toFront()
+                    videoFrame.extendedState = this.extendedState or JFrame.MAXIMIZED_BOTH
+                    mediaPlayerComponent.mediaPlayer.playMedia(file.path)
+                }
+            } else {
+                logger.error("Error with : " + file.path)
+            }
         }
     }
 
@@ -141,6 +155,8 @@ class UiClass : JFrame() {
         mediaPlayerComponent.mediaPlayer.addMediaPlayerEventListener(BgMediaPlayerEventAdapter(videoFrame))
         videoFrame.isVisible = false
         videoFrame.isUndecorated = true
+
+
     }
 
     private fun initBuzzPanel(): JPanel {

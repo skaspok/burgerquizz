@@ -16,7 +16,7 @@ public class BurgerQuizzApplication {
 
 	public static void main(String[] args) {
 
-		if(args.length > 0 ){
+        if(args.length > 0 ){
 			File videoFolder = new File( args[0].replace("\"",""));
 			if(videoFolder.isDirectory()){
 				ConfigurableApplicationContext context = new SpringApplicationBuilder(BurgerQuizzApplication.class).headless(false).run(args);
@@ -27,6 +27,5 @@ public class BurgerQuizzApplication {
 		}else{
 			logger.error("Please pass the burgerquizz videos path");
 		}
-
 	}
 }
