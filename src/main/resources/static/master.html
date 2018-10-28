@@ -2,130 +2,110 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Burger Quizz Master</title>
 
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-
-    <!-- <script src="/webjars/bootstrap.min.js"></script> -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <!-- Bootstrap core CSS -->
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+
     <link href="/style.css" rel="stylesheet">
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="master-app.js"></script>
+    <!-- <link href="/style-master.css" rel="stylesheet"> -->
 </head>
 
 <body>
-    <noscript>
-        <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-            enabled. Please enable
-            Javascript and reload this page!</h2>
-    </noscript>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Jingles</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Intro
+                        <span class="caret"></span></a>
+                    <ul id="dropdown-intro" class="dropdown-menu">
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Nuggets
+                        <span class="caret"></span></a>
+                    <ul id="dropdown-nuggets" class="dropdown-menu">
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sel et poivre
+                        <span class="caret"></span></a>
+                    <ul id="dropdown-sel-ou-poivre" class="dropdown-menu">
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu
+                        <span class="caret"></span></a>
+                    <ul id="dropdown-menus" class="dropdown-menu">
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Addition
+                        <span class="caret"></span></a>
+                    <ul id="dropdown-addition" class="dropdown-menu">
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Divers
+                        <span class="caret"></span></a>
+                    <ul id="dropdown-divers" class="dropdown-menu">
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="container">
-        <div class="row">
-            <div class="col-xs-4">
-                <button id="minus-mayo" type="button" class="btn">Moins</button>
-            </div>
-            <div class="col-xs-2 mayo">
-                Mayo
-            </div>
-            <div class="col-xs-2">
-                <button id="plus-mayo" type="button" class="btn">Plus</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4">
-                <button id="minus-ketchup" type="button" class="btn">Moins</button>
-            </div>
-            <div class="col-xs-3  ketchup">
-                Ketchup
-            </div>
-            <div class="col-xs-3">
-                <button id="plus-ketchup" type="button" class="btn">Plus</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                Lire les video :
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="btn-group" role="group" aria-label="...">
-                    <div class="btn-group" role="group">
-                        <button id="intro" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Intro
-                            <span class="caret"></span>
-                        </button>
-                        <ul id="dropdown-intro" class="dropdown-menu">
-                        </ul>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Nuggets
-                            <span class="caret"></span>
-                        </button>
-                        <ul id="dropdown-nuggets" class="dropdown-menu">
-                        </ul>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Sel ou poivre
-                            <span class="caret"></span>
-                        </button>
-                        <ul id="dropdown-sel-ou-poivre" class="dropdown-menu">
-                        </ul>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                           Menus
-                            <span class="caret"></span>
-                        </button>
-                        <ul id="dropdown-menus" class="dropdown-menu">
-                        </ul>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                           Addition
-                            <span class="caret"></span>
-                        </button>
-                        <ul id="dropdown-addition" class="dropdown-menu">
-                        </ul>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Burger de la mort
-                            <span class="caret"></span>
-                        </button>
-                        <ul id="dropdown-burger-de-la-mort" class="dropdown-menu">
-                        </ul>
-                    </div>
-                    <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Divers
-                                <span class="caret"></span>
-                            </button>
-                            <ul id="dropdown-divers" class="dropdown-menu">
-                            </ul>
-                        </div>
+
+            <h2>Points : </h2>
+
+            <div class="row">
+                <div class="col-xs-4 pointButton">
+                    <button id="minus-mayo" type="button" class="btn">Moins</button>
+                </div>
+                <div class="col-xs-4 mayo">
+                    Mayo
+                </div>
+                <div class="col-xs-4 pointButton">
+                    <button id="plus-mayo" type="button" class="btn">Plus</button>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-xs-4 pointButton">
+                    <button id="minus-ketchup" type="button" class="btn">Moins</button>
+                </div>
+                <div class="col-xs-4 ketchup">
+                    Ketchup
+                </div>
+                <div class="col-xs-4 pointButton">
+                    <button id="plus-ketchup" type="button" class="btn">Plus</button>
+                </div>
+            </div>
 
-    </div> <!-- end of container -->
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/webjars/jquery/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="master-app.js"></script>
+
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+
 </body>
 
 </html>
