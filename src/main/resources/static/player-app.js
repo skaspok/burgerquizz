@@ -46,7 +46,7 @@ function sendToken(){
 
                    setConnected(true);
 
-                   //TODO set team name
+                   //set team name
                     $( "#team" ).text( "Team " +team );
 
                     //suscribe to buzz result
@@ -62,7 +62,7 @@ function sendToken(){
 }
 
 function buzzResult(message) {
-    //TODO AFFICHER gagner uo pas
+    //TODO Displays win or not
 }
 
 $(function () {

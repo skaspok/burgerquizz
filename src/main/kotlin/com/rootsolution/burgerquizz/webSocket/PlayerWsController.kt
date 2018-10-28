@@ -18,8 +18,6 @@ class PlayerWsController(private val teamManager: TeamManager,
     private val logger = LoggerFactory.getLogger(PlayerWsController::class.qualifiedName)
 
     //Players
-    //TODO : different file?
-
     @MessageMapping("/buzz/{destToken}")
     @SendTo("/bg/buzz-result/{destToken}")
     fun buzz(@DestinationVariable destToken: String): Boolean{

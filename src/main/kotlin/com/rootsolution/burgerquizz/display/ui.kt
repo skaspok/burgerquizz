@@ -15,6 +15,12 @@ import javax.swing.ImageIcon
 import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JPanel
+import java.awt.Color
+import javax.swing.border.EmptyBorder
+
+
+
+
 
 
 class UiClass : JFrame() {
@@ -33,7 +39,7 @@ class UiClass : JFrame() {
 
     //Videos
     private val videoFrame = JFrame()
-    val mediaPlayerComponent = EmbeddedMediaPlayerComponent()
+    private val mediaPlayerComponent = EmbeddedMediaPlayerComponent()
 
     private val logger = LoggerFactory.getLogger(UiClass::class.qualifiedName)
 
@@ -197,15 +203,16 @@ class UiClass : JFrame() {
         scorePanel.layout = FlowLayout()
         scorePanel.background = Color.black
 
-        setBackground(mayoScoreLabel, "/static/images/backgroundScore.png")
+       // setBackground(mayoScoreLabel, "/static/images/backgroundScore.png")
+
         initScoreLabel(mayoScoreLabel)
 
         val miams1 = JLabel()
         setBackground(miams1, "/static/images/miams.png");
-        setBackground(ketchupScoreLabel, "/static/images/backgroundScore.png")
+      //  setBackground(ketchupScoreLabel, "/static/images/backgroundScore.png")
         initScoreLabel(ketchupScoreLabel)
         val miams2 = JLabel()
-        setBackground(miams2, "/static/images/miams.png");
+       // setBackground(miams2, "/static/images/miams.png");
         scorePanel.add(mayoScoreLabel)
         scorePanel.add(miams1)
         scorePanel.add(ketchupScoreLabel)
@@ -223,7 +230,10 @@ class UiClass : JFrame() {
         label.font = Font("Serif", Font.PLAIN, 80)
         label.text = "0"
         label.alignmentX = Component.LEFT_ALIGNMENT
-        label.foreground = Color.white
+        label.foreground = Color.black
+        label.background = Color(51, 103, 163)
+        label.isOpaque = true
+        label.border = EmptyBorder(20, 20, 30, 20)
 //        label.border =  BorderFactory.createLineBorder(Color.PINK, 3);
 //        label.border = EmptyBorder(0, 0, 0, -20)
     }

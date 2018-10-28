@@ -31,8 +31,6 @@ class TeamManager(){
         theTeams.add(team )
         UiClass.instance!!.setTeamImage(team.teamName,true)
 
-
-
         return team
     }
 
